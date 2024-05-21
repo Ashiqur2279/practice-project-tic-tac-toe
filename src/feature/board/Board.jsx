@@ -3,34 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Square from "../../utils/square/Square";
 
-const Board = () => {
-  const [turn, setTurn] = useState(null);
-  const [squares, setSquares] = useState(Array(9).fill(null));
-
-  function handleMarkerClick(e) {
-    const marker = e.target.textContent;
-    setTurn(marker);
-  }
-  // board component create successfully
-  // board component create successfully 2
-
-  function handleClick(index) {
-    if (!turn) {
-      toast.warn("Please At First Select Your Marker");
-      return;
-    }
-
-    let selectedSquare = squares.slice();
-    if (turn === "X") {
-      selectedSquare[index] = "X";
-      setTurn("O");
-    } else if (turn === "O") {
-      selectedSquare[index] = "O";
-      setTurn("X");
-    }
-    setSquares(selectedSquare);
-  }
-
+const Board = ({ turn, squares, marker, handleClick, handleMarkerClick }) => {
   return (
     <div className="bg-gray-400 w-full">
       <ToastContainer />
