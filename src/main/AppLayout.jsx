@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import Board from "../feature/board/Board";
 import TurnHistory from "../feature/turnHistory/TurnHistory";
-import { toast } from "react-toastify";
 
 const AppLayout = () => {
   const [turn, setTurn] = useState(null);
@@ -21,13 +21,22 @@ const AppLayout = () => {
     }
 
     let selectedSquare = squares.slice();
-    if (turn === "X") {
-      selectedSquare[index] = "X";
-      setTurn("O");
-    } else if (turn === "O") {
-      selectedSquare[index] = "O";
-      setTurn("X");
+
+    if (selectedSquare[index]) {
+      toast.info("Already clicked");
+      return;
     }
+
+    selectedSquare[index] = turn;
+    setTurn(turn === "X" ? "O" : "X");
+
+    // if (turn === "X") {
+    //   selectedSquare[index] = "X";
+    //   setTurn("O");
+    // } else if (turn === "O") {
+    //   selectedSquare[index] = "O";
+    //   setTurn("X");
+    // }
     setSquares(selectedSquare);
   }
 
