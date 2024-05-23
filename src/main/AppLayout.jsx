@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Board from "../feature/board/Board";
 import TurnHistory from "../feature/turnHistory/TurnHistory";
+import calculateWinner from "../utils/calculateWinner/CalculateWinner";
 
 const AppLayout = () => {
   const [turn, setTurn] = useState(null);
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [marker, setMarker] = useState(null);
+  const [winner, setWinner] = useState(false);
+
+  useEffect(() => {
+    const lastPlayer = calculateWinner(squares);
+    if (lastPlayer) {
+      toast.success(`${lastPlayer} won the match`);
+      setWinner(true);
+    }
+  }, [squares]);
 
   function handleMarkerClick(e) {
     const marker = e.target.textContent;
@@ -17,6 +27,12 @@ const AppLayout = () => {
   function handleClick(index) {
     if (!turn) {
       toast.warn("Please At First Select Your Marker");
+      return;
+    }
+    if (winner) {
+      toast.info(
+        `The Game is Finished. If you want to play again - press the Reset button`
+      );
       return;
     }
 
@@ -43,16 +59,17 @@ const AppLayout = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="text-4xl font-bold p-4">Welcome to Tic-Tac-Toe</header>
-
-      <main className=" flex justify-center space-x-4 flex-grow">
-        <Board
-          turn={turn}
-          squares={squares}
-          marker={marker}
-          handleClick={handleClick}
-          handleMarkerClick={handleMarkerClick}
-        />
-        <TurnHistory />
+      <main>
+        <div className=" flex justify-center space-x-4 flex-grow">
+          <Board
+            turn={turn}
+            squares={squares}
+            marker={marker}
+            handleClick={handleClick}
+            handleMarkerClick={handleMarkerClick}
+          />
+          <TurnHistory />
+        </div>
       </main>
 
       <footer className="text-center py-4">
