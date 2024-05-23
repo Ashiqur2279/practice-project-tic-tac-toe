@@ -56,6 +56,14 @@ const AppLayout = () => {
     setSquares(selectedSquare);
   }
 
+  function handleReset() {
+    setTurn(null);
+    setSquares(Array(9).fill(null));
+    setMarker(null);
+    setWinner(false);
+    return;
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="text-4xl font-bold p-4">Welcome to Tic-Tac-Toe</header>
@@ -69,6 +77,16 @@ const AppLayout = () => {
             handleMarkerClick={handleMarkerClick}
           />
           <TurnHistory />
+        </div>
+        <div>
+          {winner && (
+            <button
+              className="border border-orange-400 py-1 px-2"
+              onClick={handleReset}
+            >
+              Reset
+            </button>
+          )}
         </div>
       </main>
 
