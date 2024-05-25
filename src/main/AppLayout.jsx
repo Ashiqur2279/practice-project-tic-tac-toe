@@ -8,16 +8,25 @@ const AppLayout = () => {
   const [turn, setTurn] = useState(null);
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [marker, setMarker] = useState(null);
-  const [winner, setWinner] = useState(false);
+  const [winner, setWinner] = useState(null);
+  const [noWinner, setNoWinner] = useState(false);
 
   useEffect(() => {
     const lastPlayer = calculateWinner(squares);
     if (lastPlayer) {
       toast.success(`${lastPlayer} won the match`);
-      setWinner(true);
+      setWinner(lastPlayer);
+    } else {
+      const isTie = squares.every((square) => square !== null);
+      if (isTie) {
+        setNoWinner(true);
+        toast.info(`The game is tie. Please press the Reset button`);
+        console.log(`hello`);
+      }
     }
   }, [squares]);
 
+  console.log(noWinner);
   function handleMarkerClick(e) {
     const marker = e.target.textContent;
     setTurn(marker);
@@ -34,6 +43,9 @@ const AppLayout = () => {
         `The Game is Finished. If you want to play again - press the Reset button`
       );
       return;
+    }
+    if (squares && winner) {
+      console.log("chill baby");
     }
 
     let selectedSquare = squares.slice();
@@ -79,7 +91,7 @@ const AppLayout = () => {
           <TurnHistory />
         </div>
         <div>
-          {winner && (
+          {(winner || noWinner) && (
             <button
               className="border border-orange-400 py-1 px-2"
               onClick={handleReset}
