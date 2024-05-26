@@ -10,8 +10,10 @@ const AppLayout = () => {
   const [marker, setMarker] = useState(null);
   const [winner, setWinner] = useState(null);
   const [noWinner, setNoWinner] = useState(false);
+  const [history, setHistory] = useState([squares]); //set the squares in a array
 
   useEffect(() => {
+    // the code is for checking is there any winner or not. it's connected with reset btn.
     const lastPlayer = calculateWinner(squares);
     if (lastPlayer) {
       toast.success(`${lastPlayer} won the match`);
@@ -26,14 +28,17 @@ const AppLayout = () => {
     }
   }, [squares]);
 
-  console.log(noWinner);
+  // console.log(`squares`, squares);
+
   function handleMarkerClick(e) {
+    //code for the first player marker selection
     const marker = e.target.textContent;
     setTurn(marker);
     setMarker(marker);
   }
 
   function handleClick(index) {
+    //code for update or clicking functionalities on any single square
     if (!turn) {
       toast.warn("Please At First Select Your Marker");
       return;
@@ -65,10 +70,13 @@ const AppLayout = () => {
     //   selectedSquare[index] = "O";
     //   setTurn("X");
     // }
+
     setSquares(selectedSquare);
+    setHistory([...history, selectedSquare]);
   }
 
   function handleReset() {
+    //code for reset all state
     setTurn(null);
     setSquares(Array(9).fill(null));
     setMarker(null);
@@ -87,13 +95,14 @@ const AppLayout = () => {
             marker={marker}
             handleClick={handleClick}
             handleMarkerClick={handleMarkerClick}
+            winner={winner}
           />
-          <TurnHistory />
+          <TurnHistory history={history} />
         </div>
         <div>
           {(winner || noWinner) && (
             <button
-              className="border border-orange-400 py-1 px-2"
+              className="border rounded border-orange-400 py-1 px-2 my-4"
               onClick={handleReset}
             >
               Reset
