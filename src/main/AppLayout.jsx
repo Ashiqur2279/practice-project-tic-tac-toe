@@ -23,7 +23,6 @@ const AppLayout = () => {
       if (isTie) {
         setNoWinner(true);
         toast.info(`The game is tie. Please press the Reset button`);
-        console.log(`hello`);
       }
     }
   }, [squares]);
@@ -49,9 +48,9 @@ const AppLayout = () => {
       );
       return;
     }
-    if (squares && winner) {
-      console.log("chill baby");
-    }
+    // if (squares && winner) {
+
+    // }
 
     let selectedSquare = squares.slice();
 
@@ -75,12 +74,19 @@ const AppLayout = () => {
     setHistory([...history, selectedSquare]);
   }
 
+  function handleMove(numOfMove) {
+    //the function is moving to the previous move
+    setSquares(history[numOfMove]);
+    setTurn(numOfMove % 2 === 0 ? marker : marker === "X" ? "O" : "X");
+  }
+
   function handleReset() {
     //code for reset all state
     setTurn(null);
     setSquares(Array(9).fill(null));
     setMarker(null);
     setWinner(false);
+    setHistory([squares]);
     return;
   }
 
@@ -97,7 +103,7 @@ const AppLayout = () => {
             handleMarkerClick={handleMarkerClick}
             winner={winner}
           />
-          <TurnHistory history={history} />
+          <TurnHistory history={history} onHandleMove={handleMove} />
         </div>
         <div>
           {(winner || noWinner) && (
