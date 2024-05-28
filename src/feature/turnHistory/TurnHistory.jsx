@@ -16,13 +16,12 @@ const TurnHistory = ({ history, onHandleMove }) => {
                 Go to move no {index}
               </button>
             ) : (
-              // <button className="border rounded border-black p-1 m-1 bg-lime-500 font-semibold">
-              //   Let's start the game
-              // </button>
               <span className="text-lg my-1 font-semibold">
-                {history.length > 1
-                  ? `Let's review the previous move:`
-                  : `Let's start the Game`}
+                {history.length > 1 ? (
+                  <p className="p-2">Let's review the previous move:</p>
+                ) : (
+                  <p className="p-2">Let's start the Game</p>
+                )}
               </span>
             )}
           </li>

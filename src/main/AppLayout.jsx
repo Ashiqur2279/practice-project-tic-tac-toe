@@ -48,9 +48,6 @@ const AppLayout = () => {
       );
       return;
     }
-    // if (squares && winner) {
-
-    // }
 
     let selectedSquare = squares.slice();
 
@@ -91,31 +88,31 @@ const AppLayout = () => {
   }
 
   return (
-    <div className="flex flex-col h-96">
+    <div className="flex flex-col min-h-screen min-w-screen">
       <header className="text-4xl font-bold p-4">Welcome to Tic-Tac-Toe</header>
-      <main>
-        <div className=" flex justify-center space-x-4 flex-grow">
-          <Board
-            turn={turn}
-            squares={squares}
-            marker={marker}
-            handleClick={handleClick}
-            handleMarkerClick={handleMarkerClick}
-            winner={winner}
-          />
-          <TurnHistory history={history} onHandleMove={handleMove} />
-        </div>
-        <div>
-          {(winner || noWinner) && (
-            <button
-              className="border rounded border-orange-400 py-1 px-2 my-4 bg-yellow-400 text-xl font-semibold"
-              onClick={handleReset}
-            >
-              Reset
-            </button>
-          )}
-        </div>
+
+      <main className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4">
+        <Board
+          turn={turn}
+          squares={squares}
+          marker={marker}
+          handleClick={handleClick}
+          handleMarkerClick={handleMarkerClick}
+          winner={winner}
+        />
+        <TurnHistory history={history} onHandleMove={handleMove} />
       </main>
+
+      <div>
+        {(winner || noWinner) && (
+          <button
+            className="border rounded border-orange-400 py-1 px-2 my-4 bg-yellow-400 text-xl font-semibold"
+            onClick={handleReset}
+          >
+            Reset
+          </button>
+        )}
+      </div>
 
       <footer className="text-center py-4">
         All right reserved to &copy;Ashiqur2279
