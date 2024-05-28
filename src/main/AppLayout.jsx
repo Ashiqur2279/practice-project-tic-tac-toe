@@ -91,7 +91,7 @@ const AppLayout = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col h-96">
       <header className="text-4xl font-bold p-4">Welcome to Tic-Tac-Toe</header>
       <main>
         <div className=" flex justify-center space-x-4 flex-grow">
@@ -108,7 +108,7 @@ const AppLayout = () => {
         <div>
           {(winner || noWinner) && (
             <button
-              className="border rounded border-orange-400 py-1 px-2 my-4"
+              className="border rounded border-orange-400 py-1 px-2 my-4 bg-yellow-400 text-xl font-semibold"
               onClick={handleReset}
             >
               Reset
